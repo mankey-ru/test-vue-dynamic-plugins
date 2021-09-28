@@ -23,7 +23,7 @@ const pluginList = [
 				name: 'Plugin2_RouteNameB',
 				// type: 'VUE_COMPONENT',
 				// sourceCode не указан, вместо у него урл
-				sourceUrl: '/pluginService/pluginComps/MyPluginAsyncComponent/app.js',
+				sourceUrl: '/pluginService/pluginComps/comp-async/app.js',
 			},
 			/* 			{
 				path: 'Plugin1_RoutePath2',
