@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import pluginManager from '@/../pluginManager/pluginManager.src.js';
 
 Vue.use(VueRouter);
 
@@ -10,7 +11,7 @@ const routes = [
 		name: 'Home',
 		component: Home,
 	},
-	...window.WflowPluginManager.getRoutes(Vue),
+	...pluginManager.getRoutes(Vue),
 ];
 
 const router = new VueRouter({

@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 		<link rel="icon" href="<%= BASE_URL %>favicon.ico" />
 		<title><%= htmlWebpackPlugin.options.title %></title>
+		<base href="<%= BASE_URL %>" />
 	</head>
 	<body>
 		<!-- 
@@ -14,11 +15,19 @@
 			Тогда и Vue передавать не надо будет, и глобальная переменная будет не нужна
 		-->
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/6.10.3/s.min.js" integrity="sha512-OyT/fksVU/zagZKWnEcykw3JcQ8KCblJcoWFuCSYSjyH3IdXvdEI0B4My9SGZlU6HpnEu/fDByZoYRJ7DJmG4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		
-		<script src="<%= BASE_URL %>pluginManager.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/6.10.3/s.min.js" integrity="sha512-OyT/fksVU/zagZKWnEcykw3JcQ8KCblJcoWFuCSYSjyH3IdXvdEI0B4My9SGZlU6HpnEu/fDByZoYRJ7DJmG4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+		<!-- <script src="<%= BASE_URL %>pluginManager.js"></script> -->
 		<!-- здесь вызов регистрации, JS-код и другие данные плагинов. -->
-		<script src="<%= BASE_URL %>pluginService/pluginData/index.js"></script>
+		<!-- <script src="<%= BASE_URL %>pluginService/pluginData/index.js"></script> -->
+
+		<script type="systemjs-importmap">
+			{
+				"imports": {
+					"pluginData": "/pluginService/pluginData/index.js"
+				}
+			}
+		</script>
 
 		<div id="app"></div>
 		<!-- built files will be auto injected -->
