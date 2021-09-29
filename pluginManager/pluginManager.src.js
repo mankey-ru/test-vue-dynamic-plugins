@@ -1,5 +1,5 @@
 import Vue from 'vue';
-const SystemJS = window.System;
+// const SystemJS = window.System;
 const pluginRegistry = [];
 
 export default {
@@ -49,7 +49,7 @@ function componentResolver(routeOrComponent, plugName, Vue) {
 			resolve(Vue.component(`plug__${plugName}__${routeOrComponent.sourceCode.name}`, routeOrComponent.sourceCode));
 		} else if (routeOrComponent.sourceUrl) {
 			// код компонента получается асинхронно, при вызове этого компонента (т.е. загрузки маршрута)
-			SystemJS.import(routeOrComponent.sourceUrl)
+			window.System.import(routeOrComponent.sourceUrl)
 				.then((mod) => resolve(mod.default))
 				.catch(reject);
 		} else throw `Neither sourceCode nor sourceUrl present`;

@@ -3,7 +3,6 @@ import App from './App.vue';
 
 import pluginManager from '@/../pluginManager/pluginManager.src.js';
 
-
 import SystemJSexecute from 'systemjs/dist/system.js'; // нужно для появления window.System
 const System = window.System;
 
@@ -25,7 +24,6 @@ const System = window.System;
 
 System.import(['pluginData'])
 	.then((pluginData) => {
-		console.log(pluginData);
 		for (const plug of pluginData.pluginList) pluginManager.registerPlugin(plug);
 		pluginManager.registerGlobalComps();
 		new Vue({
