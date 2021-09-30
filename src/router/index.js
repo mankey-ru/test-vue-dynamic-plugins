@@ -11,7 +11,7 @@ const routes = [
 		name: 'Home',
 		component: Home,
 	},
-	...pluginManager.getRoutes(Vue),
+	...pluginManager.getRoutes(),
 ];
 
 const router = new VueRouter({

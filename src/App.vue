@@ -2,7 +2,7 @@
 	<div id="app">
 		<div id="nav">
 			<RouterLink v-for="rt in $router.options.routes" :to="rt.path" :key="rt.path">{{
-				rt.name
+				rt.meta ? rt.meta.title : rt.name
 			}}</RouterLink>
 		</div>
 		<router-view />

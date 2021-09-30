@@ -1,5 +1,6 @@
 import Vue from 'vue';
 const pluginRegistry = [];
+const compRegistry = [];
 
 import SystemJSexecute from 'systemjs/dist/system.js'; // нужно для появления window.System
 const System = window.System;
@@ -27,14 +28,18 @@ const pluginManager = {
 			.catch((error) => console.error(error));
 	},
 	getRoutes,
-	// getPlugin,
-	// registerPlugin,
-	// registerGlobalComps,
-	getComp,
+	getRouteName,
+	getCompGlobalNamesBySlot,
 };
 
-function getComp() {
-	
+function getCompGlobalNamesBySlot(slotName) {
+	return compRegistry
+		.filter((comp) => comp.slotName === slotName)
+		.map((comp) => getCompGlobalName(comp._pluginName, comp.name));
+}
+
+function getRouteName(plug, route) {
+	return `plugRt__${plug.name}__${route.name}`;
 }
 
 function getPlugin(pluginName) {
@@ -48,14 +53,17 @@ function registerPlugin(pluginData) {
 function getRoutes() {
 	const routes = [];
 
-	pluginRegistry.forEach((plugData) => {
-		plugData.routes.forEach((plugRoute) => {
-			makePreload(plugRoute);
+	pluginRegistry.forEach((plug) => {
+		plug.routes.forEach((route) => {
+			makePreload(route);
 			routes.push({
-				name: `plug__${plugData.name}__${plugRoute.name}`,
-				path: `/plug__${plugData.name}__${plugRoute.path}`,
+				name: getRouteName(plug, route),
+				path: `/${getRouteName(plug, route)}`,
+				meta: {
+					title: route.title,
+				},
 				component: () => ({
-					component: new Promise(componentResolver(plugRoute, plugData.name, Vue)),
+					component: new Promise(componentResolver(route, plug.name)),
 				}),
 			});
 		});
@@ -66,18 +74,23 @@ function getRoutes() {
 }
 
 function registerGlobalComps() {
-	pluginRegistry.forEach((plugData) => {
-		plugData.globalComps.forEach((plugComp) => {
-			makePreload(plugComp);
-			Vue.component(
-				/* `plugCmp__${plugData.name}__${plugComp.name}` */ 'PLUGCMP',
-				componentResolver(plugComp, plugData.name, Vue)
-			);
+	pluginRegistry.forEach((plug) => {
+		plug.globalComps.forEach((comp) => {
+			makePreload(comp);
+			compRegistry.push({
+				_pluginName: plug.name,
+				...comp,
+			});
+			Vue.component(getCompGlobalName(plug.name, comp.name), componentResolver(comp, plug.name));
 		});
 	});
 }
 
-function componentResolver(routeOrComponent, plugName, Vue) {
+function getCompGlobalName(plugName, compName) {
+	return `plugCmp__${plugName}__${compName}`;
+}
+
+function componentResolver(routeOrComponent, plugName) {
 	// routeOrComponent - объект с полями sourceCode либо sourceUrl (TODO сделать отдельный более строгий в плане типа объект)
 	return (resolve, reject) => {
 		if (routeOrComponent.sourceCode) {
