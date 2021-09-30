@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import pluginManager from '@/../pluginManager/pluginManager.src.js';
+import pluginManager from '@/pluginManager.js';
 
 Vue.use(VueRouter);
 

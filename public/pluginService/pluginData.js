@@ -15,7 +15,7 @@ const pluginData = {
 						// данные поля sourceCode сервис читает с диска, он там в скомпилённом виде (dist)
 						name: 'Plugin1_RouteComponent',
 						render: function (createElement) {
-							return createElement('h1', ['это контент компонента МАРШРУТА плагина', createElement('PLUGCMP')]);
+							return createElement('h1', ['это контент синхронного МАРШРУТА плагина', createElement('PLUGCMP')]);
 						},
 					},
 				},
@@ -67,7 +67,7 @@ const pluginData = {
 								{
 									style: `color: red; font-size: 12px; padding: .5rem; font-weight: normal;`,
 								},
-								'это контент ГЛОБАЛЬНОГО компонента (например, контрола) плагина'
+								'это контент синхронного компонента (например, контрола) плагина'
 							);
 						},
 					},
